@@ -1,1 +1,6 @@
-<view class="title">hello world!</view>
+
+<view class="weather-wrapper">
+  <view class="temp">12°</view>
+  <view class="desc">Sunny</view>
+  <image src="/images/sunny-bg.png" class="weather-bg" mode="scaleToFill"></image>
+</view>

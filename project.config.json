@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.9.93",
 	"appid": "touristappid",
-	"projectname": "weather",
+	"projectname": "weather-demo1",
 	"condition": {
 		"search": {
 			"current": -1,
