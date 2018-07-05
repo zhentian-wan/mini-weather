@@ -15,6 +15,7 @@
 }
 
 .weather-wrapper {
+  position: relative;
 padding-top: 174rpx;
 padding-bottom: 250rpx;
 }
@@ -76,4 +77,29 @@ padding-bottom: 250rpx;
   margin-top: 46rpx;
   font-size: 42prx;
   line-height: 58rpx;
+}
+
+.day-weather {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom:0;
+  left: 40rpx;
+  right: 40rpx;
+  height: 90rpx;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 30rpx;
+  line-height: 42rpx;
+  color: rgba(0, 0, 0, 0.5)
+}
+
+.temp-text {
+  flex: 1; /*the same as flex-grow: 1;*/
+  padding-right: 30rpx;
+  text-align: right;
+}
+
+.arrow-icon {
+  width: 13rpx;
+  height: 24rpx;
 }

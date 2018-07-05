@@ -3,6 +3,13 @@
   <view class="temp">{{temp}}</view>
   <view class="desc">{{weather}}</view>
   <image src="/images/{{weatherImg}}-bg.png" class="weather-bg" mode="scaleToFill"></image>
+
+  <view class="day-weather" bindtap="onDayWeatherTapped">
+    <view class="day-text">{{todayDate}}</view>
+    <view class="temp-text">{{todayTemp}}</view>
+  <image class="arrow-icon" src="/images/arrow.png"></image>
+  </view>
+
 </view>
 <view class="timetips">
   <image class="timetips-icon" src="/images/time-icon.png"></image>

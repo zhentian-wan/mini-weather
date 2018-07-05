@@ -20,7 +20,9 @@ Page({
   data: {
     temp: '',
     weatherImg: 'sunny',
-    forecast: []
+    forecast: [],
+    todayTemp: "",
+    todayDate: ""
   },
   onPullDownRefresh() {
     this.getNow();
@@ -29,6 +31,12 @@ Page({
     this.getNow(() => {
       wx.stopPullDownRefresh();
     });
+  },
+  onDayWeatherTapped() {
+    // Routing to a new page
+    wx.navigateTo({
+      url: '/pages/list/list'
+    })
   },
   setNow(result) {
     const { temp, weather } = result;
@@ -54,6 +62,13 @@ Page({
     }
     this.setData({ forecast })
   },
+  setToday(result) {
+    let date = new Date()
+    this.setData({
+      todayTemp: `${result.minTemp}° - ${result.maxTemp}°`,
+      todayDate: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} 今天`
+    })
+  },
   getNow(cb = () => {}) {
     wx.request({
       url: 'https://test-miniprogram.com/api/weather/now',
@@ -65,10 +80,11 @@ Page({
       },
       success: (res) => {
     
-        const { now, forecast } = res.data.result;
+        const { now, forecast, today } = res.data.result;
         
         this.setNow(now);
         this.setHourlyWeather(forecast);
+        this.setToday(today);
 
       },
       complete: (res) => {
