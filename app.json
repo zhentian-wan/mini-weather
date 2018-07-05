@@ -5,7 +5,7 @@
   ],
   "window": {
     "enablePullDownRefresh": true,
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Weather",
     "navigationBarTextStyle": "black"
