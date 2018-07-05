@@ -3,8 +3,9 @@
     "pages/index/index"
   ],
   "window":{
+    "enablePullDownRefresh": true,
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#cbeefd",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Weather",
     "navigationBarTextStyle":"black"
   }
