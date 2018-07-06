@@ -1,5 +1,15 @@
 
 <view class="weather-wrapper">
+
+  <view class="location-wrapper" bindtap="onTapLocation">
+    <view class="location">
+      <image src="/images/location-icon.png" class="location-icon"></image>
+      <view class="location-text">{{city}}</view>
+    </view>
+
+    <view class="location-tips">{{locationTipsText}}</view>
+  </view>
+
   <view class="temp">{{temp}}</view>
   <view class="desc">{{weather}}</view>
   <image src="/images/{{weatherImg}}-bg.png" class="weather-bg" mode="scaleToFill"></image>
@@ -18,10 +28,14 @@
 
 <scroll-view scroll-x>
  <view class='forecast-list'>
-    <view class="forecast-item" wx:for="{{forecast}}">
-      <view class= 'forecast-time'> {{item.time}}</view>
-      <image class= 'forecast-weather' src="{{item.iconPath}}"></image>
-      <view class= 'forecast-temp'>{{item.temp}}</view>
+    <view class="forecast-item" 
+    wx:for="{{forecast}}"
+    wx:for-item="fo"
+    wx:for-index="idx" 
+    wx:key="idx">
+      <view class= 'forecast-time'> {{fo.time}}</view>
+      <image class= 'forecast-weather' src="{{fo.iconPath}}"></image>
+      <view class= 'forecast-temp'>{{fo.temp}}</view>
     </view>
 </view>
 </scroll-view>
