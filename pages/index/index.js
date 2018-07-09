@@ -15,6 +15,9 @@ const weatherColorMap = {
   'heavyrain': '#c5ccd0',
   'snow': '#aae1fc'
 };
+const UNPROMPTED = 0
+const UNAUTHORIZED = 1
+const AUTHORIZED = 2
 
 const QQMapWX = require('../../libs/qqmap-wx-jssdk.js');
 let qqmapsdk;
@@ -26,7 +29,7 @@ Page({
     todayTemp: "",
     todayDate: "",
     city: "广州市",
-    locationTipsText: "点击获取当前位置"
+    locationAuthType: UNPROMPTED
   },
   onPullDownRefresh() {
     this.getNow();
@@ -38,27 +41,66 @@ Page({
     qqmapsdk = new QQMapWX({
       key: 'EAXBZ-33R3X-AA64F-7FIPQ-BY27J-5UF5B'
     });
+    wx.getSetting({
+      success: res => {
+        let auth = res.authSetting['scope.userLocation']
+        let locationAuthType = auth ? AUTHORIZED
+          : (auth === false) ? UNAUTHORIZED : UNPROMPTED
+        this.setData({
+          locationAuthType: locationAuthType
+        })
+
+        if (auth)
+          this.getCityAndWeather()
+        else
+          this.getNow() //使用默认城市广州
+      },
+      fail: () => {
+        this.getNow() //使用默认城市广州
+      }
+    })
   },
-  onTapLocation() {
+  getCityAndWeather() {
     wx.getLocation({
       type: 'wgs84',
-      success: ({ longitude, latitude}) => {
+      success: ({ longitude, latitude }) => {
         qqmapsdk.reverseGeocoder({
           location: {
             latitude,
             longitude
           },
           success: (res) => {
-            const locality = "上海市" ||res.result.address_component.locality;
+            const locality = "上海市" || res.result.address_component.locality;
             this.setData({
               city: locality,
-              locationTipsText: ""
+              locationAuthType: AUTHORIZED
             });
             this.getNow();
+          },
+          fail: () => {
+            this.setData({
+              locationAuthType: UNAUTHORIZED
+            });
           }
         });
       }
     })
+  },
+  onTapLocation() {
+    if (this.data.locationAuthType === UNAUTHORIZED) {
+      wx.openSetting({
+        success: (res) => {
+          const auth = res.authSetting['scope.userLocation'];
+          if(auth) {
+            this.setData({
+              locationAuthType: AUTHORIZED
+            })
+          }
+        }
+      });
+    } else {
+      this.getCityAndWeather();
+    }
   },
   onDayWeatherTapped() {
     // Routing to a new page
